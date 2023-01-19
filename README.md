@@ -3,6 +3,8 @@ A repository made for my work on the assignments solved in C++ in this course, s
 
 The litterature used in this course is the 2nd edition of [Bjarne Stroustrup: Programming: Principles and Practice Using C++](https://www.stroustrup.com/programming.html) with ISBN 9780321992789.
 
+<img src="https://raw.githubusercontent.com/isocpp/logos/master/cpp_logo.png" alt="C++ Logo" width="306" height="344" />
+
 <p align="center">
   <img src="https://github.com/haavardok/TDT4102_Procedural_and_Object_Oriented_Programming/blob/master/pictures/cpp_logo.png" "Good ol' C++">
 </p>
