@@ -153,12 +153,41 @@ void multiplicationTable()
 	cin >> width;
 	cout << "input height: ";
 	cin >> height;
-	cout << "\n";
 
-	for(int i = 1; i <= height; i++) {
-		cout << width << " * " << i << " = " << width * i << endl;
+	for(int j = 1; j <= height; j++) {
+		for(int i = 1; i <= width; i++) {
+			cout << setw(4) << i * j;
+		}
+		cout << "\n";
 	}
 	cout << "\n";
+}
+
+// Problem 3a
+double discriminant(double a, double b, double c)
+{
+	return pow(b,2) - 4*a*c;
+}
+
+// Problem 3b
+void printRealRoots(double a, double b, double c)
+{
+	double x1 = 0.0;
+	double x2 = 0.0;
+
+	if(discriminant(a,b,c) > 0) {
+		x1 = (-b - sqrt(discriminant(a,b,c))) / 2*a;
+		x2 = (-b + sqrt(discriminant(a,b,c))) / 2*a;
+		cout << "x1 = " << fixed << setprecision(2) << x1 << endl;
+		cout << "x2 = " << x2 << endl;
+	}
+	else if(discriminant(a,b,c) == 0) {
+		x1 = -b / 2*a;
+		cout << "x = " << x1;
+	}
+	else {
+		cout << "The equation has no real solution ://";
+	}
 }
 
 // Problem 1a
@@ -215,7 +244,8 @@ void menu()
 // C++ programs start by executing the function main
 int main() {
     // Pint the menu options to the user
-    menu();
+    //menu();
+	printRealRoots(1.0,5.0,1.0);
 
     // This lets the operating system (Windows, Mac, Linux, etc.) know that the program
     // did not encounter any errors
