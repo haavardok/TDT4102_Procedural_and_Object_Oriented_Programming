@@ -90,6 +90,7 @@ void inputUnlimitedIntegersAndPrintSum()
 	int number = 0;
 	int sum = 0;
 
+	cout << "\n";
 	while(1) {
 		number = inputInteger();
 		if(number != 0) {
@@ -99,7 +100,7 @@ void inputUnlimitedIntegersAndPrintSum()
 			break;
 		}
 	}
-	cout << "Summation finished with sum: " << sum << "\n";
+	cout << "Summation finished with sum: " << sum << "\n\n";
 }
 
 // Problem 2c
@@ -231,18 +232,53 @@ void pythagoras()
 }
 
 // Problem 5
+double yearBalance(double deposit, int interest, int year)
+{
+	double currentBalance = 0.0;
+	currentBalance = deposit * pow((1 + static_cast<double>(interest) / 100), year);
+
+	return currentBalance;
+}
+
 vector<int> calculateBalance(double deposit, int interest, int years)
 {
 	vector<int> balance(years);
+	double annualBalance = 0.0;
+
 	balance.at(0) = static_cast<int>(deposit);
+	for(int year = 1; year < years; year++) {
+		annualBalance = yearBalance(deposit, interest, year);
+		balance.at(year) = static_cast<int>(annualBalance);
+	}
 
-	return;
+	return balance;
 }
 
-void newBalance()
+// Problem 5b
+void printBalance(vector<int> integerVector)
 {
-	// Balance = Deposit * (1+interest/100)^years
+	cout << setw(8) << "Year" << setw(8) << "Balance" << endl;
+	for(int i = 0; i < static_cast<int>(integerVector.size()); i++) {
+		cout << setw(8) << i << setw(8) << integerVector.at(i) << endl;
+	}
 }
+
+// Problem 5c
+/*
+	The error message most likely comes from trying to print
+	out the whole vector with just cout. The vector type needs
+	to be iterated through using a loop and printing each element
+	individually.
+*/
+
+// Problem 5d
+/*
+	The error in this code is that one is trying to write out
+	one more element in the vector than the length of the vector.
+	Should change comparison "<=" to "<". Also when using the
+	.size() method the return type is long long unsigned. Should
+	static cast the type to int.
+*/
 
 // Problem 1a
 void menu()
@@ -268,13 +304,9 @@ void menu()
 			inputIntegersAndPrintSum();
 			break;
 		case 2:
-			for (int i = 0; i <= 15; i++) {
-				cout << i << ": ";
-				cout << (isOdd(i) ? "true" : "false");
-				cout << endl;
-			}
-			cout << endl;			
+			inputUnlimitedIntegersAndPrintSum();		
 			break;
+
 		case 3:
 			convertNOKtoEur();
 			break;
@@ -309,6 +341,9 @@ void menu()
 int main() {
     // Print the menu options to the user
     menu();
+
+	// Problem 5b
+	//printBalance(calculateBalance(5000,3,10));
 
     // This lets the operating system (Windows, Mac, Linux, etc.) know that the program
     // did not encounter any errors
