@@ -1,5 +1,6 @@
 
 #include "std_lib_facilities.h"
+#include "AnimationWindow.h"
 
 //------------------------------------------------------------------------------
 
@@ -183,11 +184,64 @@ void printRealRoots(double a, double b, double c)
 	}
 	else if(discriminant(a,b,c) == 0) {
 		x1 = -b / 2*a;
-		cout << "x = " << x1;
+		cout << "x = " << x1 << endl;
 	}
 	else {
-		cout << "The equation has no real solution ://";
+		cout << "The equation has no real solution ://\n";
 	}
+}
+
+// Problem 3c
+void solveQuadraticEquation()
+{
+	double a = 0.0;
+	double b = 0.0;
+	double c = 0.0;
+
+	cout << "\nInsert a, b and c: " << endl;
+	a = inputDouble();
+	b = inputDouble();
+	c = inputDouble();
+	printRealRoots(a,b,c);
+	cout << "\n";
+}
+
+// Problem 3d
+/*
+	Done in the menu under "Problem 1a".
+*/
+
+// Problem 3e
+/*
+	Done in terminal after running code. Gives results as expected.
+*/
+
+// Problem 4
+void pythagoras()
+{
+	Point point1{200,275}, point2{275,275}, point3{200,175};
+	AnimationWindow win{100, 100, 500, 500, "Pythagoras"};
+
+	win.draw_triangle(point1, point2, point3, Color::black);
+	win.draw_quad(point3, Point{100,175}, Point{100,275}, point1, Color::green_yellow);
+	win.draw_quad(point1, Point{200,350}, Point{275,350}, point2, Color::red);
+	win.draw_quad(point3, point2, Point{375,200}, Point{300,100}, Color::blue);
+
+	win.wait_for_close();
+}
+
+// Problem 5
+vector<int> calculateBalance(double deposit, int interest, int years)
+{
+	vector<int> balance(years);
+	balance.at(0) = static_cast<int>(deposit);
+
+	return;
+}
+
+void newBalance()
+{
+	// Balance = Deposit * (1+interest/100)^years
 }
 
 // Problem 1a
@@ -201,7 +255,9 @@ void menu()
 			<< "3)\tConvert NOK to Euro\n"
 			<< "4)\tConvert seconds to time\n"
 			<< "5)\tPrint multiplication table\n"
-			<< "Choose option (0-5): ";
+			<< "6)\tSolve quadratic equation\n"
+			<< "7)\tDraw Pythagoras\n"
+			<< "Choose option (0-7): ";
 
 		int menu_choice;
 		cin >> menu_choice;
@@ -230,6 +286,14 @@ void menu()
 		case 5:
 			multiplicationTable();
 			break;
+		
+		case 6:
+			solveQuadraticEquation();
+			break;
+
+		case 7:
+			pythagoras();
+			break;
 
 		default:
 			return; // quit program
@@ -243,9 +307,8 @@ void menu()
 
 // C++ programs start by executing the function main
 int main() {
-    // Pint the menu options to the user
-    //menu();
-	printRealRoots(1.0,5.0,1.0);
+    // Print the menu options to the user
+    menu();
 
     // This lets the operating system (Windows, Mac, Linux, etc.) know that the program
     // did not encounter any errors
