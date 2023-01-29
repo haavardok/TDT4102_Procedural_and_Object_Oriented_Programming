@@ -18,5 +18,6 @@ namespace TDT4102 {
     public:
         explicit TextInput(TDT4102::Point location, unsigned int width, unsigned int height, std::string initialText = "");
         std::string getText();
+        void setText(std::string text);
     };
 }

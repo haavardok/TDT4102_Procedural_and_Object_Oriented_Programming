@@ -1,29 +1,28 @@
 #define _USE_MATH_DEFINES
-#include <cmath>
-
 #include "AnimationWindow.h"
-#include <thread>
+
 #include <chrono>
+#include <cmath>
 #include <iostream>
+#include <thread>
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
-#include <array>
-#include <sstream>
 #include <unistd.h>
 
-#include "internal/nuklear_configured.h"
-#include "internal/KeyboardKeyConverter.h"
+#include <array>
+#include <sstream>
+
 #include "internal/FontCache.h"
+#include "internal/KeyboardKeyConverter.h"
+#include "internal/nuklear_configured.h"
 #include "widgets/Button.h"
-
-
 
 static bool sdlHasBeenInitialised = false;
 
 TDT4102::AnimationWindow::AnimationWindow(int x, int y, int width, int height, const std::string& title) {
     // Initialise SDL if it has not already been
-    if(!sdlHasBeenInitialised) {
-        if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (!sdlHasBeenInitialised) {
+        if (SDL_Init(SDL_INIT_VIDEO) < 0) {
             throw std::runtime_error("Failed to create an AnimationWindow: The SDL backend could not be initialised.\nError details: " + std::string(SDL_GetError()));
         }
         sdlHasBeenInitialised = true;
@@ -31,21 +30,20 @@ TDT4102::AnimationWindow::AnimationWindow(int x, int y, int width, int height, c
 
     // Open a new window
     windowHandle = SDL_CreateWindow(
-        title.c_str(), x, y, width, height, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
-    if(windowHandle == nullptr) {
+        title.c_str(), x, y, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    if (windowHandle == nullptr) {
         throw std::runtime_error("Failed to create an AnimationWindow: The SDL backend could not open a new window.\nError details: " + std::string(SDL_GetError()));
     }
 
     // Create a renderer
-    rendererHandle = SDL_CreateRenderer(windowHandle, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
-    if(rendererHandle == nullptr) {
+    rendererHandle = SDL_CreateRenderer(windowHandle, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (rendererHandle == nullptr) {
         throw std::runtime_error("Failed to create an AnimationWindow: The SDL backend could not create a renderer.\nError details: " + std::string(SDL_GetError()));
     }
 
     // Default window background colour
     SDL_SetRenderDrawColor(rendererHandle, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(rendererHandle);
-
 
     SDL_RendererInfo rendererInfo;
     SDL_GetRendererInfo(rendererHandle, &rendererInfo);
@@ -60,32 +58,32 @@ TDT4102::AnimationWindow::AnimationWindow(int x, int y, int width, int height, c
 
 TDT4102::AnimationWindow::~AnimationWindow() {
     // Free SDL resources depending on how much ended up being initialised in the constructor
-    if(rendererHandle != nullptr) {
+    if (rendererHandle != nullptr) {
         SDL_DestroyRenderer(rendererHandle);
     }
-    if(windowHandle != nullptr) {
+    if (windowHandle != nullptr) {
         SDL_DestroyWindow(windowHandle);
     }
 }
 
 void TDT4102::AnimationWindow::show_frame() {
     SDL_RenderPresent(rendererHandle);
-    
+
     SDL_Event event;
     nk_input_begin(context);
-    while(SDL_PollEvent(&event)) {
-        if(event.type == SDL_QUIT) {
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
             closeRequested = true;
-        } else if(event.type == SDL_KEYDOWN) {
+        } else if (event.type == SDL_KEYDOWN) {
             KeyboardKey pressedKey = TDT4102::internal::convertSDLKeyToKeyboardKey(event.key.keysym);
             // Using [] syntax here intentionally such that new entries are created automatically if they don't exist inside the map
             currentKeyStates[pressedKey] = true;
-        } else if(event.type == SDL_KEYUP) {
+        } else if (event.type == SDL_KEYUP) {
             KeyboardKey releasedKey = TDT4102::internal::convertSDLKeyToKeyboardKey(event.key.keysym);
             currentKeyStates[releasedKey] = false;
-        } else if(event.type == SDL_MOUSEBUTTONDOWN) {
+        } else if (event.type == SDL_MOUSEBUTTONDOWN) {
             currentLeftMouseButtonState = true;
-        } else if(event.type == SDL_MOUSEBUTTONUP) {
+        } else if (event.type == SDL_MOUSEBUTTONUP) {
             currentLeftMouseButtonState = false;
         }
 
@@ -95,7 +93,7 @@ void TDT4102::AnimationWindow::show_frame() {
 }
 
 void TDT4102::AnimationWindow::update_gui() {
-    for(Widget &widget : widgets) {
+    for (Widget& widget : widgets) {
         startNuklearDraw(widget.position, widget.uniqueWidgetName, widget.width, widget.height);
         fontCache.setFont(context, Font::arial, 18);
         widget.update(context);
@@ -106,21 +104,21 @@ void TDT4102::AnimationWindow::update_gui() {
 void TDT4102::AnimationWindow::next_frame() {
     update_gui();
     nk_sdl_render(NK_ANTI_ALIASING_ON);
-    
+
     show_frame();
 
     // Colour must be reset as a previously drawn element may have changed the current colour
-    if(!keepPreviousFrame) {
+    if (!keepPreviousFrame) {
         SDL_SetRenderDrawColor(rendererHandle, backgroundColour.redChannel, backgroundColour.greenChannel, backgroundColour.blueChannel, backgroundColour.alphaChannel);
         SDL_RenderClear(rendererHandle);
-    } 
-    
+    }
+
     // Reset window name counters
     textWindowCounter = 0;
 }
 
 bool TDT4102::AnimationWindow::should_close() const {
-    return closeRequested; 
+    return closeRequested;
 }
 
 void TDT4102::AnimationWindow::wait_for_close() {
@@ -130,15 +128,15 @@ void TDT4102::AnimationWindow::wait_for_close() {
 
     // take a screenshot such that the window contents can be redrawn
     TDT4102::Point windowSize = getWindowDimensions();
-    SDL_Surface *screenContents = SDL_CreateRGBSurface(0, windowSize.x, windowSize.y, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+    SDL_Surface* screenContents = SDL_CreateRGBSurface(0, windowSize.x, windowSize.y, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
     SDL_RenderReadPixels(rendererHandle, NULL, SDL_PIXELFORMAT_ARGB8888, screenContents->pixels, screenContents->pitch);
     SDL_Texture* screenTexture = SDL_CreateTextureFromSurface(rendererHandle, screenContents);
 
-    while(!should_close()) {
+    while (!should_close()) {
         next_frame();
 
         // Draw screen contents
-        SDL_Rect imageBounds {0, 0, windowSize.x, windowSize.y};
+        SDL_Rect imageBounds{0, 0, windowSize.x, windowSize.y};
         SDL_RenderCopy(rendererHandle, screenTexture, nullptr, &imageBounds);
     }
 
@@ -148,7 +146,7 @@ void TDT4102::AnimationWindow::wait_for_close() {
 }
 
 void TDT4102::AnimationWindow::wait_for(double timeSeconds) {
-    usleep(int(1000000.0*timeSeconds));
+    usleep(int(1000000.0 * timeSeconds));
 }
 
 void TDT4102::AnimationWindow::keep_previous_frame(bool enabled) {
@@ -166,11 +164,11 @@ void TDT4102::AnimationWindow::draw_circle(TDT4102::Point centre, int radius, TD
     centreVertex.tex_coord = {0, 0};
     internal::circleCoordinateBuffer.at(0) = centreVertex;
 
-    for(int i = 1; i <= internal::SLICES_PER_CIRCLE; i++) {
+    for (int i = 1; i <= internal::SLICES_PER_CIRCLE; i++) {
         SDL_Vertex outerVertex;
         float fraction = float(i) / float(internal::SLICES_PER_CIRCLE);
         float angle = fraction * (M_PI * 2.0f);
-        outerVertex.position = {float(centre.x) + (float(radius) * float(std::cos(angle))), 
+        outerVertex.position = {float(centre.x) + (float(radius) * float(std::cos(angle))),
                                 float(centre.y) + (float(radius) * float(std::sin(angle)))};
         outerVertex.color = {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel};
         outerVertex.tex_coord = {0, 0};
@@ -182,7 +180,7 @@ void TDT4102::AnimationWindow::draw_circle(TDT4102::Point centre, int radius, TD
         internal::circleIndexBuffer.at(3 * (i - 1) + 2) = i;
 
         // Border index buffer
-        if(borderColour != Color::transparent) {
+        if (borderColour != Color::transparent) {
             internal::circleBorderBuffer.at(i - 1) = {int(outerVertex.position.x), int(outerVertex.position.y)};
         }
     }
@@ -194,9 +192,9 @@ void TDT4102::AnimationWindow::draw_circle(TDT4102::Point centre, int radius, TD
 
     internal::circleBorderBuffer.at(internal::SLICES_PER_CIRCLE) = internal::circleBorderBuffer.at(0);
 
-    SDL_RenderGeometry(rendererHandle, nullptr, internal::circleCoordinateBuffer.data(), internal::circleCoordinateBuffer.size(), 
-                                                internal::circleIndexBuffer.data(), internal::circleIndexBuffer.size());
-    if(borderColour != Color::transparent) {
+    SDL_RenderGeometry(rendererHandle, nullptr, internal::circleCoordinateBuffer.data(), internal::circleCoordinateBuffer.size(),
+                       internal::circleIndexBuffer.data(), internal::circleIndexBuffer.size());
+    if (borderColour != Color::transparent) {
         SDL_SetRenderDrawColor(rendererHandle, borderColour.redChannel, borderColour.greenChannel, borderColour.blueChannel, borderColour.alphaChannel);
         SDL_RenderDrawLines(rendererHandle, internal::circleBorderBuffer.data(), internal::circleBorderBuffer.size());
     }
@@ -204,19 +202,19 @@ void TDT4102::AnimationWindow::draw_circle(TDT4102::Point centre, int radius, TD
 
 void TDT4102::AnimationWindow::draw_rectangle(TDT4102::Point topLeftPoint, int width, int height, TDT4102::Color color) {
     SDL_Rect fillRect = {topLeftPoint.x, topLeftPoint.y, width, height};
-    SDL_SetRenderDrawColor(rendererHandle, color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);        
+    SDL_SetRenderDrawColor(rendererHandle, color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
     SDL_RenderFillRect(rendererHandle, &fillRect);
 }
 
-void TDT4102::AnimationWindow::draw_image(TDT4102::Point topLeftPoint, TDT4102::Image & image, int imageWidth, int imageHeight) {
+void TDT4102::AnimationWindow::draw_image(TDT4102::Point topLeftPoint, TDT4102::Image& image, int imageWidth, int imageHeight) {
     image.draw(rendererHandle, topLeftPoint, imageWidth, imageHeight);
 }
 
-void TDT4102::AnimationWindow::draw_text(TDT4102::Point bottomLeftPoint, std::string textToShow, TDT4102::Color color, unsigned int fontSize, TDT4102::Font font) {
+void TDT4102::AnimationWindow::draw_text(TDT4102::Point topLeftPoint, std::string textToShow, TDT4102::Color color, unsigned int fontSize, TDT4102::Font font) {
     textWindowCounter++;
     std::stringstream windowName;
     windowName << "text" << textWindowCounter;
-    startNuklearDraw(bottomLeftPoint, windowName.str());
+    startNuklearDraw(topLeftPoint, windowName.str());
     fontCache.setFont(context, font, fontSize);
     nk_color textColour{color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel};
     nk_text_colored(context, textToShow.c_str(), textToShow.size(), NK_TEXT_ALIGN_LEFT, textColour);
@@ -224,40 +222,39 @@ void TDT4102::AnimationWindow::draw_text(TDT4102::Point bottomLeftPoint, std::st
 }
 
 void TDT4102::AnimationWindow::draw_line(TDT4102::Point start, TDT4102::Point end, TDT4102::Color color) {
-    SDL_SetRenderDrawColor(rendererHandle, color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);        
+    SDL_SetRenderDrawColor(rendererHandle, color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
     SDL_RenderDrawLine(rendererHandle, start.x, start.y, end.x, end.y);
 }
 
 void TDT4102::AnimationWindow::draw_triangle(TDT4102::Point vertex0, TDT4102::Point vertex1,
                                              TDT4102::Point vertex2, TDT4102::Color color) {
-    SDL_Vertex v0 {{float(vertex0.x), float(vertex0.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
-    SDL_Vertex v1 {{float(vertex1.x), float(vertex1.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
-    SDL_Vertex v2 {{float(vertex2.x), float(vertex2.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
-    std::array<SDL_Vertex, 3> vertexArray {v0, v1, v2};
-    std::array<int, 3> indexArray {0, 1, 2};
+    SDL_Vertex v0{{float(vertex0.x), float(vertex0.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
+    SDL_Vertex v1{{float(vertex1.x), float(vertex1.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
+    SDL_Vertex v2{{float(vertex2.x), float(vertex2.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
+    std::array<SDL_Vertex, 3> vertexArray{v0, v1, v2};
+    std::array<int, 3> indexArray{0, 1, 2};
     SDL_RenderGeometry(rendererHandle, nullptr, vertexArray.data(), 3, indexArray.data(), 3);
-
 }
 
 void TDT4102::AnimationWindow::draw_quad(TDT4102::Point vertex0, TDT4102::Point vertex1, TDT4102::Point vertex2,
                                          TDT4102::Point vertex3, TDT4102::Color color) {
-    SDL_Vertex v0 {{float(vertex0.x), float(vertex0.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
-    SDL_Vertex v1 {{float(vertex1.x), float(vertex1.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
-    SDL_Vertex v2 {{float(vertex2.x), float(vertex2.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
-    SDL_Vertex v3 {{float(vertex3.x), float(vertex3.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
-    std::array<SDL_Vertex, 4> vertexArray {v0, v1, v2, v3};
-    std::array<int, 6> indexArray {0, 1, 2, 0, 2, 3};
+    SDL_Vertex v0{{float(vertex0.x), float(vertex0.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
+    SDL_Vertex v1{{float(vertex1.x), float(vertex1.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
+    SDL_Vertex v2{{float(vertex2.x), float(vertex2.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
+    SDL_Vertex v3{{float(vertex3.x), float(vertex3.y)}, {color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel}, {0, 0}};
+    std::array<SDL_Vertex, 4> vertexArray{v0, v1, v2, v3};
+    std::array<int, 6> indexArray{0, 1, 2, 0, 2, 3};
     SDL_RenderGeometry(rendererHandle, nullptr, vertexArray.data(), 4, indexArray.data(), 6);
 }
 
 void TDT4102::AnimationWindow::draw_arc(TDT4102::Point center, int width, int height, int start_degree, int end_degree, TDT4102::Color color) {
-    if(start_degree < 0 || start_degree > 360) {
+    if (start_degree < 0 || start_degree > 360) {
         throw std::invalid_argument("The start_degree parameter was set to " + std::to_string(start_degree) + ", but should be a value between 0 and 360");
     }
-    if(end_degree < 0 || end_degree > 360) {
+    if (end_degree < 0 || end_degree > 360) {
         throw std::invalid_argument("The end_degree parameter was set to " + std::to_string(end_degree) + ", but should be a value between 0 and 360");
     }
-    if(start_degree >= end_degree) {
+    if (start_degree >= end_degree) {
         std::swap(start_degree, end_degree);
     }
 
@@ -265,11 +262,10 @@ void TDT4102::AnimationWindow::draw_arc(TDT4102::Point center, int width, int he
     float endFraction = float(end_degree) / 360.0f;
     float stepFraction = (endFraction - startFraction) / float(internal::SLICES_PER_CIRCLE);
 
-    for(int i = 0; i < internal::SLICES_PER_CIRCLE; i++) {
+    for (int i = 0; i < internal::SLICES_PER_CIRCLE; i++) {
         internal::circleBorderBuffer.at(i) = {
             center.x + int(float(width) * std::cos((startFraction + float(i) * stepFraction) * 2.0f * M_PI)),
-            center.y + int(float(height) * -std::sin((startFraction + float(i) * stepFraction) * 2.0f * M_PI))
-        };
+            center.y + int(float(height) * -std::sin((startFraction + float(i) * stepFraction) * 2.0f * M_PI))};
     }
 
     SDL_SetRenderDrawColor(rendererHandle, color.redChannel, color.greenChannel, color.blueChannel, color.alphaChannel);
@@ -277,7 +273,7 @@ void TDT4102::AnimationWindow::draw_arc(TDT4102::Point center, int width, int he
 }
 
 bool TDT4102::AnimationWindow::is_key_down(KeyboardKey key) {
-    if(currentKeyStates.count(key) == 0) {
+    if (currentKeyStates.count(key) == 0) {
         return false;
     }
     return currentKeyStates.at(key);
@@ -289,7 +285,7 @@ TDT4102::Point TDT4102::AnimationWindow::get_mouse_coordinates() {
     return {mouseX, mouseY};
 }
 
-void TDT4102::AnimationWindow::add(TDT4102::Widget &widgetToAdd) {
+void TDT4102::AnimationWindow::add(TDT4102::Widget& widgetToAdd) {
     // Make sure not to create a copy
     widgets.emplace_back(widgetToAdd);
 }
@@ -314,9 +310,9 @@ bool TDT4102::AnimationWindow::is_left_mouse_button_down() const {
 
 void TDT4102::AnimationWindow::startNuklearDraw(TDT4102::Point location, std::string uniqueWindowName, unsigned int width, unsigned int height) {
     // Make window transparent; we just want to see individual GUI elements
-    struct nk_style *s = &context->style;
-    nk_style_push_color(context, &s->window.background, nk_rgba(0,0,0,0));
-    nk_style_push_style_item(context, &s->window.fixed_background, nk_style_item_color(nk_rgba(0,0,0,0)));
+    struct nk_style* s = &context->style;
+    nk_style_push_color(context, &s->window.background, nk_rgba(0, 0, 0, 0));
+    nk_style_push_style_item(context, &s->window.fixed_background, nk_style_item_color(nk_rgba(0, 0, 0, 0)));
 
     // Start drawing
     TDT4102::Point windowSize = getWindowDimensions();
@@ -326,7 +322,7 @@ void TDT4102::AnimationWindow::startNuklearDraw(TDT4102::Point location, std::st
 
     // If no draw size was specified, use as much space as available inside the window
     struct nk_rect drawAreaSize;
-    if(width == 0 && height == 0) {
+    if (width == 0 && height == 0) {
         drawAreaSize = nk_rect(float(location.x), float(location.y), float(windowSize.x - location.x + drawAreaPadding), float(windowSize.y - location.y + drawAreaPadding));
     } else {
         drawAreaSize = nk_rect(float(location.x), float(location.y), float(width), float(height));

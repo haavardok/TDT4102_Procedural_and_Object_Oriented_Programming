@@ -25,3 +25,11 @@ std::string TDT4102::TextInput::getText() {
     // This chops those off
     return std::string(contents.data());
 }
+
+void TDT4102::TextInput::setText(std::string updatedText) {
+    contents = updatedText;
+    contents.resize(internal::TEXT_INPUT_CHARACTER_LIMIT);
+
+    previousContents = updatedText;
+    previousContents.resize(internal::TEXT_INPUT_CHARACTER_LIMIT);
+}

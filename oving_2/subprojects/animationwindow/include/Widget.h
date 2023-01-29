@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <functional>
 #include "internal/nuklear_configured.h"
 #include "Point.h"
 #include "internal/windows_main_fix.h"
@@ -15,7 +16,7 @@ namespace TDT4102 {
     class Widget {
     friend class TDT4102::AnimationWindow;
     private:
-        void (*callbackFunction)() = nullptr;
+        std::function<void(void)> callbackFunction;
         TDT4102::Point position;
         unsigned int width = 0;
         unsigned int height = 0;
@@ -27,7 +28,7 @@ namespace TDT4102 {
         virtual void update(nk_context* context) = 0;
         explicit Widget(TDT4102::Point position, unsigned int width, unsigned int height);
     public:
-        void setCallback(void (*callbackFunction)());
+        void setCallback(std::function<void(void)> callback);
         virtual ~Widget() {}
     };
 }

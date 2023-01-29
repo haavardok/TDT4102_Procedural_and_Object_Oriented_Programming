@@ -1,6 +1,6 @@
 #include "Widget.h"
 
-void TDT4102::Widget::setCallback(void (*callback)()) {
+void TDT4102::Widget::setCallback(std::function<void(void)> callback) {
     this->callbackFunction = callback;
 }
 
