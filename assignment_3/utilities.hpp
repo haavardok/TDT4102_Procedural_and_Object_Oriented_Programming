@@ -1,4 +1,4 @@
 #pragma once
 
-// Problem 5a
-double randomNumber();
+// Problem 5b and 5c
+int randomWithLimits(int lowerLimit, int upperLimit);

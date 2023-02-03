@@ -2,12 +2,12 @@
 #include "std_lib_facilities.h"
 #include "utilities.hpp"
 
-random_device rd;
-default_random_engine generator(rd());
-
-// Problem 5a
-double randomNumber()
+// Problem 5b and 5c
+int randomWithLimits(int lowerLimit, int upperLimit)
 {
-    double number = generator();
+    std::random_device rd;
+    std::default_random_engine generator(rd());
+    std::uniform_int_distribution<int> distribution(lowerLimit,upperLimit);
+    int number = distribution(generator);
     return number;
 }

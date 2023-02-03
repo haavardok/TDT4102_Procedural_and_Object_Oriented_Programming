@@ -28,6 +28,7 @@ else
     src,
 'cannonball.cpp',
 'main.cpp',
+'utilities.cpp',
     dependencies : [animationwindow_dep, sdl2_dep],
     cpp_args : ['-Wconversion', '-fdiagnostics-color=always', '-Werror=return-type', '-fcolor-diagnostics', '-fansi-escape-codes']
   )

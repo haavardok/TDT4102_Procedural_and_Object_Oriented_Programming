@@ -59,8 +59,11 @@ int main() {
     // Problem 4e
     //checkIfDistanceToTargetIsCorrect();
 
-    //cout << randomNumber();
+    // Problem 5b and 5c
+    //cout << randomWithLimits(0,100);
 
+    // Problem 5d
+    playTargetPractice();
 
     // This lets the operating system (Windows, Mac, Linux, etc.) know that the program
     // did not encounter any errors

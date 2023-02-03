@@ -1,5 +1,6 @@
 #include "std_lib_facilities.h"
 #include "cannonball.hpp"
+#include "utilities.hpp"
 
 // Problem 2a
 double acclY()
@@ -99,4 +100,61 @@ double targetPractice(double distanceToTarget, double velocityX, double velocity
 {
     double distanceTraveled = getDistanceTraveled(velocityX, velocityY);
     return distanceToTarget - distanceTraveled;
+}
+
+// Problem 5d
+void playTargetPractice()
+{
+    char gameOn;
+    int numberOfGuesses = 10;
+    double error =  1000;
+    double angle = 0.0;
+    double velocityInput = 0.0;
+    double velocityX = 0.0;
+    double velocityY = 0.0;
+    double timeInAir = 0.0;
+    double distanceToGoal = 0.0;
+    cout << "Start game [y/n]: ";
+    cin >> gameOn;
+
+    int goalLocation = randomWithLimits(100,1000);
+    distanceToGoal = static_cast<double>(goalLocation);
+
+    switch(gameOn)
+    {
+    case 'y':
+        cout << "Insert your first guess for theta and speed:\n";
+        
+        while(numberOfGuesses) {
+            error = distanceToGoal;
+            angle = getUserInputTheta();
+            velocityInput = getUserInputAbsVelocity();
+
+            velocityX = getVelocityX(angle,velocityInput);
+            velocityY = getVelocityY(angle,velocityInput);
+            timeInAir = flightTime(velocityY);
+            printTime(timeInAir);
+
+            error = targetPractice(error, velocityX, velocityY);
+
+            if(abs(error) <= 5.0) {
+                cout << "Congratulations! You hit the target :)" << endl;
+                break;
+            }
+            cout << "Miss. The distance to the goal is: " << error << endl;
+
+            if(numberOfGuesses-1 == 0) {
+                cout << "You lost!" << endl;
+                break;
+            }
+            cout << numberOfGuesses-1 << " tries left. Try again!" << endl;
+            numberOfGuesses = numberOfGuesses - 1;
+        }
+        break;
+    case 'n':
+        cout << "Quitting game ...";
+    default:
+        return;
+        break;
+    }
 }
