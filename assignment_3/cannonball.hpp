@@ -28,3 +28,9 @@ double getVelocityX(double theta, double absVelocity);
 double getVelocityY(double theta, double absVelocity);
 
 vector<double> getVelocityVector(double theta, double absVelocity);
+
+// Problem 4b
+double getDistanceTraveled(double velocityX, double velocityY);
+
+// Problem 4c
+double targetPractice(double distanceToTarget, double velocityX, double velocityY);

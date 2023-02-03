@@ -86,3 +86,17 @@ vector<double> getVelocityVector(double theta, double absVelocity)
 
     return velocityVector;
 }
+
+// Problem 4b
+double getDistanceTraveled(double velocityX, double velocityY)
+{
+    double timeInAir = flightTime(velocityY);
+    return posX(0.0, velocityX, timeInAir);
+}
+
+// Problem 4c
+double targetPractice(double distanceToTarget, double velocityX, double velocityY)
+{
+    double distanceTraveled = getDistanceTraveled(velocityX, velocityY);
+    return distanceToTarget - distanceTraveled;
+}
