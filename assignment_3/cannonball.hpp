@@ -1,4 +1,5 @@
 #pragma once
+#include "std_lib_facilities.h"
 
 // Problem 1a
 double acclY();

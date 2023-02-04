@@ -1,6 +1,7 @@
 #include "std_lib_facilities.h"
 #include "cannonball.hpp"
 #include "utilities.hpp"
+#include "cannonball_viz.h"
 
 // Problem 2a
 double acclY()
@@ -104,6 +105,8 @@ double targetPractice(double distanceToTarget, double velocityX, double velocity
 // Problem 5d
 void playTargetPractice()
 {
+    int    timeSteps{100};
+    int    fieldLength{1000};
     int    numberOfGuesses{10};
     char   gameOn{'X'};
     double cannonAngle{0.0};
@@ -112,7 +115,7 @@ void playTargetPractice()
     double distanceToGoal{0.0};
     vector<double> velocityVector(2);
 
-    int goalLocation = randomWithLimits(100,1000);
+    int goalLocation = randomWithLimits(100,fieldLength);
 
     cout << "Start game [y/n]: ";
     cin >> gameOn;
@@ -133,6 +136,8 @@ void playTargetPractice()
 
             cout << "The air time of the cannonball was ";
             printTime(timeInAir);
+
+            cannonBallViz(static_cast<double>(goalLocation), fieldLength, velocityVector.at(0), velocityVector.at(1), timeSteps);
 
             if(abs(distanceToGoal) <= 5.0) {
                 cout << "\nCongratulations! You hit the target :)\nClosing game ..." << endl;
