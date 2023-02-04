@@ -32,11 +32,10 @@ void printTime(double time)
     int minutes = (static_cast<int>(time) % 3600) / 60;
     double seconds = fmod(time, 60);
 
-    cout << "\n"
-		 << hours << " timer, "
-		 << minutes << " minutter og "
-		 << seconds << " sekunder"
-		 << "\n" << endl;
+    cout << hours << " hours, "
+		 << minutes << " minutes and "
+		 << seconds << " seconds"
+		 << endl;
 }
 
 // Problem 2e
@@ -105,50 +104,48 @@ double targetPractice(double distanceToTarget, double velocityX, double velocity
 // Problem 5d
 void playTargetPractice()
 {
-    char gameOn;
-    int numberOfGuesses = 10;
-    double error =  1000;
-    double angle = 0.0;
-    double velocityInput = 0.0;
-    double velocityX = 0.0;
-    double velocityY = 0.0;
-    double timeInAir = 0.0;
-    double distanceToGoal = 0.0;
-    cout << "Start game [y/n]: ";
-    cin >> gameOn;
+    int    numberOfGuesses{10};
+    char   gameOn{'X'};
+    double cannonAngle{0.0};
+    double cannonballVelocity{0.0};
+    double timeInAir{0.0};
+    double distanceToGoal{0.0};
+    vector<double> velocityVector(2);
 
     int goalLocation = randomWithLimits(100,1000);
-    distanceToGoal = static_cast<double>(goalLocation);
+
+    cout << "Start game [y/n]: ";
+    cin >> gameOn;
 
     switch(gameOn)
     {
     case 'y':
-        cout << "Insert your first guess for theta and speed:\n";
+        cout << "The game will now start with your first guesses of Theta and velocity\n";
+        cout << "Goal location is " << goalLocation << " meters away!" << endl;
         
         while(numberOfGuesses) {
-            error = distanceToGoal;
-            angle = getUserInputTheta();
-            velocityInput = getUserInputAbsVelocity();
+            distanceToGoal = static_cast<double>(goalLocation);
+            cannonAngle = getUserInputTheta();
+            cannonballVelocity = getUserInputAbsVelocity();
+            velocityVector = getVelocityVector(cannonAngle, cannonballVelocity);
+            timeInAir = flightTime(velocityVector.at(1));
+            distanceToGoal = targetPractice(distanceToGoal, velocityVector.at(0), velocityVector.at(1));
 
-            velocityX = getVelocityX(angle,velocityInput);
-            velocityY = getVelocityY(angle,velocityInput);
-            timeInAir = flightTime(velocityY);
+            cout << "The air time of the cannonball was ";
             printTime(timeInAir);
 
-            error = targetPractice(error, velocityX, velocityY);
-
-            if(abs(error) <= 5.0) {
-                cout << "Congratulations! You hit the target :)" << endl;
+            if(abs(distanceToGoal) <= 5.0) {
+                cout << "\nCongratulations! You hit the target :)\nClosing game ..." << endl;
                 break;
             }
-            cout << "Miss. The distance to the goal is: " << error << endl;
+            cout << "Miss. The distance to the goal is " << distanceToGoal << " m" << endl;
 
             if(numberOfGuesses-1 == 0) {
-                cout << "You lost!" << endl;
+                cout << "\nYou lost!\nClosing game ..." << endl;
                 break;
             }
-            cout << numberOfGuesses-1 << " tries left. Try again!" << endl;
-            numberOfGuesses = numberOfGuesses - 1;
+            cout << numberOfGuesses-1 << " tries left. Try again!\n" << endl;
+            numberOfGuesses--;
         }
         break;
     case 'n':
