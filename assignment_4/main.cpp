@@ -2,6 +2,7 @@
 #include "std_lib_facilities.h"
 #include "utilities.hpp"
 #include "tests.hpp"
+#include "game.hpp"
 
 //------------------------------------------------------------------------------
 
@@ -43,7 +44,8 @@ void menu(void)
              << "2)\ttestCallByReference\n"
              << "3)\ttestSwapNumbers\n"
              << "4)\ttestString\n"
-			 << "Choose option (0-4): ";
+             << "5)\tPlay Mastermind\n"
+			 << "Choose option (0-5): ";
 
 		cin >> menu_choice;
 
@@ -60,6 +62,9 @@ void menu(void)
             break;
         case 4:
             testString();
+            break;
+        case 5:
+            playMastermind();
             break;
 
 		default:

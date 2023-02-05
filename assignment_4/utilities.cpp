@@ -80,8 +80,8 @@ string readInputToString(const int& stringLength, const char& lowerLimit, const 
             cout << "Too large letter. Try again: ";
             cin >> letterInput;
         }
-        if (isupper(letterInput)) {
-            letterInput = static_cast<char>(tolower(letterInput));
+        if (islower(letterInput)) {
+            letterInput = static_cast<char>(toupper(letterInput));
         }
         stringInput += letterInput;
     }
@@ -94,8 +94,8 @@ int countChar(const string& string, const char& letter)
 {
     int count{0};
 
-    for (int i = 0; i < static_cast<int>(string.length()); i++) {
-        if (static_cast<char>(string[i]) == letter) {
+    for (int i = 0; i < static_cast<int>(string.size()); i++) {
+        if (string[i] == letter) {
             count++;
         }
     }

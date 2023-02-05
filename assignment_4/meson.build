@@ -29,6 +29,7 @@ src = []
 exe = executable(
   'program',
   src,
+'game.cpp',
 'main.cpp',
 'tests.cpp',
 'utilities.cpp',

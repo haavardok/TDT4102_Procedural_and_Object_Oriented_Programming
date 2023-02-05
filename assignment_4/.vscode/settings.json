@@ -6,6 +6,7 @@
     "makefile.alwaysPreConfigure": false,
     "files.associations": {
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "string_view": "cpp"
     }
 }
