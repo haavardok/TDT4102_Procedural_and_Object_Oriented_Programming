@@ -49,9 +49,9 @@ void testString(void)
     int averageGrade{0};
     char averageGradeInLetter{' '};
 
-    for (int i = 0; i < static_cast<int>(gradeCount.size()); i++) {
-        gradeCount.at(i) = countChar(grades, 'A' + i);
-        averageGrade += gradeCount.at(i) * (5-i);
+    for (unsigned int i = 0; i < static_cast<unsigned int>(gradeCount.size()); i++) {
+        gradeCount.at(i) = countChar(grades, static_cast<char>('A' + i));
+        averageGrade += gradeCount.at(i) * static_cast<int>((5-i));
     }
 
     averageGrade = averageGrade / 6;

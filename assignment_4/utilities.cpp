@@ -94,8 +94,8 @@ int countChar(const string& string, const char& letter)
 {
     int count{0};
 
-    for (int i = 0; i < static_cast<int>(string.size()); i++) {
-        if (string[i] == letter) {
+    for (unsigned int i = 0; i < static_cast<unsigned int>(string.size()); i++) {
+        if (string.at(i) == letter) {
             count++;
         }
     }
