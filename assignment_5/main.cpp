@@ -1,6 +1,6 @@
 
 #include "std_lib_facilities.h"
-#include "Card.hpp"
+#include "Blackjack.hpp"
 
 //-------------------------------------------------------------------------------
 /*
@@ -15,9 +15,9 @@
     by a string.
 
     Problem 3c
-    The function CardDeck::swap() should be public because we want users of
-    our code to be able to swap two cards in our CardDeck. If the function
-    is kept private, one would not have access to the vector cards.
+    The function CardDeck::swap() should be private because we don't want users
+    of our code to be able to swap two cards in our CardDeck. The only time we
+    would want to swap cards is when shuffeling the card deck.
 */
 
 
@@ -32,8 +32,14 @@ int main() {
     // cout << "Rank: " << rank << " Suit: " << suit << endl;
 
     // Problem 2f
-    Card c{Suit::spades, Rank::ace};
-    cout << c.toString() << endl;
+    // Card c{Suit::spades, Rank::ace};
+    // cout << c.toString() << endl;
+
+    // Testing the CardDeck::print() and CardDeck::swap() function
+    //CardDeck cardDeck{};
+    //cardDeck.shuffle();
+    //cardDeck.print();
+    //cardDeck.drawCard();
 
     // This lets the operating system (Windows, Mac, Linux, etc.) know that the program
     // did not encounter any errors

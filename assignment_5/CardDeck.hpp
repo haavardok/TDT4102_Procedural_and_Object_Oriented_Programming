@@ -5,7 +5,10 @@
 class CardDeck {
 public:
     CardDeck();
-    void swap(unsigned int card1, unsigned int card2);
+    void print(void);
+    void shuffle(void);
+    Card drawCard(void);
 private:
     vector<Card> cards;
+    void swap(unsigned int card1, unsigned int card2);
 };

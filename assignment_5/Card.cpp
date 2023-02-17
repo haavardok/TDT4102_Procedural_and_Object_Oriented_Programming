@@ -13,6 +13,7 @@ string rankToString(Rank rank)
 }
 
 // Problem 2b
+// Defining the constructor Card(Suit suit, Rank rank):
 Card::Card(Suit suit, Rank rank): s{suit}, r{rank} {};
 
 // Problem 2c

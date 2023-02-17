@@ -40,9 +40,9 @@ string rankToString(Rank rank);
 class Card {
 public:
     Card(Suit suit, Rank rank);
-    Suit getSuit();
-    Rank getRank();
-    string toString();
+    Suit getSuit(void);
+    Rank getRank(void);
+    string toString(void);
 private:
     Suit s;
     Rank r;
