@@ -4,7 +4,7 @@
 // Problem 3
 class CardDeck {
 public:
-    CardDeck();
+    CardDeck(void);
     void print(void);
     void shuffle(void);
     Card drawCard(void);

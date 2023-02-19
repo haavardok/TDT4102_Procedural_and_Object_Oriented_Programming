@@ -32,7 +32,11 @@ int main() {
     // cout << "Rank: " << rank << " Suit: " << suit << endl;
 
     // Problem 2f
-    // Card c{Suit::spades, Rank::ace};
+    // Card c1{Suit::spades, Rank::ace};
+    // Card c2{Suit::spades, Rank::jack};
+    // Card c3{Suit::spades, Rank::king};
+    // Card c4{Suit::spades, Rank::queen};
+    // vector<Card> cards = {c1,c2,c3,c4};
     // cout << c.toString() << endl;
 
     // Testing the CardDeck::print() and CardDeck::swap() function
@@ -40,6 +44,10 @@ int main() {
     //cardDeck.shuffle();
     //cardDeck.print();
     //cardDeck.drawCard();
+    
+    Blackjack blackjack;
+    blackjack.playGame();
+
 
     // This lets the operating system (Windows, Mac, Linux, etc.) know that the program
     // did not encounter any errors

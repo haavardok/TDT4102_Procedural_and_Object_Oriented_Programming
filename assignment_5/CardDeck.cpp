@@ -33,7 +33,7 @@ void CardDeck::print()
 void CardDeck::shuffle()
 {
     unsigned int firstCard{0};
-    unsigned int lastCard{51};
+    unsigned int lastCard = static_cast<unsigned int>(size(cards)-1);
     unsigned int randomCard{0};
     std::random_device rd;
     std::default_random_engine generator(rd());
