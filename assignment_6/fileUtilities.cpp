@@ -39,5 +39,24 @@ void makeFileCopyWithLineNumber(const std::string& fileToCopy)
 
 void letterStatisticsInFile(const std::string& fileName)
 {
+    std::map<int, int> letterStatistics;
     std::ifstream inputStream{fileName};
+
+    for (unsigned char letter = 'a'; inputStream >> letter;) {
+        if (std::isalpha(letter)) {
+            if (letterStatistics.count(std::tolower(letter))) {
+                letterStatistics.at(std::tolower(letter))++;
+            }
+            else {
+                letterStatistics.insert({tolower(letter),1});
+            }
+        }
+    }
+
+    for (const auto& [letter, statistics] : letterStatistics) {
+        std::cout << static_cast<char>(letter) << ": " << statistics << "\t";
+        if (letter % 3 == 0) {
+            cout << "\n";
+        }
+    }
 }
