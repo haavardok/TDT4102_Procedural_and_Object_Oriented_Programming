@@ -2,6 +2,7 @@
 #include "std_lib_facilities.h"
 #include "fileUtilities.hpp"
 #include "courseCatalog.hpp"
+#include "structuredFile.hpp"
 
 /*
     ----Theory problems----
@@ -62,6 +63,9 @@ int main() {
     // std::cout << courseCatalog;
     // courseCatalog.saveCoursesToFile("NTNU_courses_new.txt");
     
+    // Problem 4b
+    // vector<Temps> test;
+    // test = readTemps("temperatures.txt");
 
     return 0;
 }
