@@ -1,0 +1,3 @@
+TDT4110;Information Technology, Introduction
+TDT4102;Procedural and Object Oriented Programming
+TMA4100;Mathematics 1 - Single variable calculus

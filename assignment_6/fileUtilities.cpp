@@ -2,10 +2,14 @@
 
 void readInputAndWriteToFile(void)
 {
-    std::filesystem::path fileName{"userInput.txt"};
-    std::ofstream outputStream{fileName};
     std::string userInput{""};
     std::string userString{""};
+    std::filesystem::path fileName{"userInput.txt"};
+    
+    std::ofstream outputStream{fileName};
+    if (!outputStream) {
+        error("Can't open output file ", "userInput.txt");
+    }
 
     std::cout << "Write words to store in file. Stop by writing 'quit'." << std::endl;
 
@@ -25,10 +29,18 @@ void readInputAndWriteToFile(void)
 void makeFileCopyWithLineNumber(const std::string& fileToCopy)
 {
     std::filesystem::path fileName{"copy-" + fileToCopy};
-    std::ofstream outputStream{fileName};
-    std::ifstream inputStream{fileToCopy};
     std::string line{""};
     int counter{0};
+
+    std::ifstream inputStream{fileToCopy};
+    if (!inputStream) {
+        error("Can't open input file ", fileToCopy);
+    }
+
+    std::ofstream outputStream{fileName};
+    if(!outputStream) {
+        error("Can't open output file ", "copy-" + fileToCopy);
+    }
 
     while (std::getline(inputStream, line)) {
         counter++;
@@ -40,7 +52,11 @@ void makeFileCopyWithLineNumber(const std::string& fileToCopy)
 void letterStatisticsInFile(const std::string& fileName)
 {
     std::map<int, int> letterStatistics;
+
     std::ifstream inputStream{fileName};
+    if (!inputStream) {
+        error("Can't open input file ", fileName);
+    }
 
     for (unsigned char letter = 'a'; inputStream >> letter;) {
         if (std::isalpha(letter)) {
