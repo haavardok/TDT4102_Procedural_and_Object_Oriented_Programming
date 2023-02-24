@@ -40,6 +40,7 @@ void testDeviation(double compareOperand, double toOperand,
     refuses to build in both cases.
 */
 
+
 // C++ programs start by executing the function main
 int main() {
     // Problem 3c

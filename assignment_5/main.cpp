@@ -48,7 +48,6 @@ int main() {
     Blackjack blackjack;
     blackjack.playGame();
 
-
     // This lets the operating system (Windows, Mac, Linux, etc.) know that the program
     // did not encounter any errors
     return 0;

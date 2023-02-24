@@ -1,4 +1,3 @@
-// This is my solution to assignment 1
 
 #include "std_lib_facilities.h"
 
