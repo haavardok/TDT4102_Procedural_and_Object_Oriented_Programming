@@ -19,7 +19,6 @@ std::istream& operator>>(std::istream& is, Temps& t)
 vector<Temps> readTemps(const std::string& fileName)
 {
     vector<Temps> temperatureVector;
-    Temps t;
     std::string line{""};
 
     std::ifstream inputStream{fileName};
@@ -36,7 +35,24 @@ vector<Temps> readTemps(const std::string& fileName)
 
 // Problem 4d
 
-void tempStats(vector<Temps> temperatureVector)
+void tempStats(std::vector<Temps> temperatureVector)
 {
-    
+    float maxTemp{0.0};
+    float minTemp{100.0};
+    int dayOfMaxTemp{0};
+    int dayOfMinTemp{0};
+
+    for (unsigned int i = 1; i < temperatureVector.size(); i++) {
+        if (temperatureVector.at(i).min < minTemp) {
+            minTemp = temperatureVector.at(i).min;
+            dayOfMinTemp = static_cast<int>(i);
+        }
+        if (temperatureVector.at(i).max > maxTemp) {
+            maxTemp = temperatureVector.at(i).max;
+            dayOfMaxTemp = static_cast<int>(i);
+        }
+    }
+
+    std::cout << "The lowest tempreature was on day " << dayOfMinTemp << " with " << minTemp << " degrees." << std::endl;
+    std::cout << "The highest tempreature was on day " << dayOfMaxTemp << " with " << maxTemp << " degrees." << std::endl;
 }

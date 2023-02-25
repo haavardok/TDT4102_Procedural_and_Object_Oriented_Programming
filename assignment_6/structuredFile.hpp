@@ -8,6 +8,6 @@ struct Temps {
 
 std::istream& operator>>(std::istream& is, Temps& t);
 
-vector<Temps> readTemps(const std::string& fileName);
+std::vector<Temps> readTemps(const std::string& fileName);
 
-void tempStats(vector<Temps> temperatureVector);
+void tempStats(std::vector<Temps> temperatureVector);

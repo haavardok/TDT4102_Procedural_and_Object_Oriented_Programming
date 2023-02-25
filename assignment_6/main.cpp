@@ -63,9 +63,11 @@ int main() {
     // std::cout << courseCatalog;
     // courseCatalog.saveCoursesToFile("NTNU_courses_new.txt");
     
-    // Problem 4b
-    // vector<Temps> test;
-    // test = readTemps("temperatures.txt");
+    // Problem 4c and 4d
+    // vector<Temps> temperatureVector;
+    // temperatureVector = readTemps("temperatures.txt");
+    // tempStats(temperatureVector);
+
 
     return 0;
 }
