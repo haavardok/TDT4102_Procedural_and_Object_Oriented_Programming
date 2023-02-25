@@ -34,7 +34,11 @@ vector<Temps> readTemps(const std::string& fileName)
 }
 
 // Problem 4d
-
+/**
+ * @brief Takes a vector of type Temps which writes day of lowest and highest temperature to terminal
+ * 
+ * @param std::vector<Temps> temperatureVector 
+ */
 void tempStats(std::vector<Temps> temperatureVector)
 {
     float maxTemp{0.0};
