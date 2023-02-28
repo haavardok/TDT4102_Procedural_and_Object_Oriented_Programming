@@ -16,4 +16,10 @@
 **/assignment_6/builddir
 **/assignment_6/subprojects
 **/assignment_6/.vscode
+**/inspera_assignment_1/.vscode
+**/inspera_assignment_1/builddir
+**/inspera_assignment_1/subprojects
 *.build
+*.vscode
+*.builddir
+*.subprojects
