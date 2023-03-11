@@ -17,6 +17,16 @@
     If one removes 'virtual' in front of 'toString()' in the 'Animal' class, then the
     redefinition of 'toString' in the sub classes would not be used. The result in the
     terminal is 'Animal:' being printed instead of 'Cat:' and 'Dog:'.
+
+    Problem 5b
+    I chose to inherit from EmptyFace instead of SmilingFace because the similarities
+    between smiling and sad is everything about the emoji except the mouth.
+
+    Problem 5e
+    I chose to inherit from EmptyFace instead of Smilingface because inheriting from
+    SmilingFace would result in the same as inheriting from EmptyFace because of the
+    'override' statement in the class declaration. Thus I chose to inherit from EmptyFace
+    due to clarity.
 */
 
 //------------------------------------------------------------------------------
