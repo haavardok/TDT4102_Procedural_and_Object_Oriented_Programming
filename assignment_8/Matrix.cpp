@@ -27,6 +27,18 @@ Matrix::Matrix(int nRows) : Matrix{nRows, nRows}
     }
 }
 
+Matrix::Matrix(const Matrix &rhs) : rows{rhs.rows}, columns{rhs.columns}, matrixData{nullptr}
+{
+    matrixData = new double*[static_cast<unsigned int>(rows)];
+    for (int i = 0; i < rows; i++) {
+        matrixData[i] = new double[static_cast<unsigned int>(columns)];
+        for (int j = 0; j < columns; j++) {
+            matrixData[i][j] = rhs.matrixData[i][j];
+        }
+    }
+
+}
+
 Matrix::~Matrix()
 {
     for (int i = 0; i < rows; i++) {
@@ -39,6 +51,38 @@ Matrix::~Matrix()
 
     rows = 0;
     columns = 0;
+}
+
+Matrix &Matrix::operator=(Matrix rhs)
+{
+    std::swap(this->rows, rhs.rows);
+    std::swap(this->columns, rhs.columns);
+    std::swap(matrixData, rhs.matrixData);
+
+    return *this;
+}
+
+Matrix &Matrix::operator+=(const Matrix &rhs)
+{
+    assert(this->rows == rhs.rows && this->columns == rhs.columns);
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            this->matrixData[i][j] += rhs.matrixData[i][j];
+        }
+    }
+
+    return *this;
+}
+
+Matrix Matrix::operator+(const Matrix &rhs)
+{
+    assert(this->rows == rhs.rows && this->columns == rhs.columns);
+
+    Matrix summedMatrix{*this};
+    summedMatrix += rhs;
+
+	return summedMatrix;
 }
 
 double Matrix::get(int row, int col) const

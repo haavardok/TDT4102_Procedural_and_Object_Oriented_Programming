@@ -54,7 +54,59 @@ int main() {
     // std::cout << "squareMatrix:\n" << squareMatrix << std::endl;
 
     // Problem 3b
-    dummyTest();
+    // dummyTest();
+
+    // Problem 4b
+    // Matrix matrix(2,3);
+    // matrix.set(1,2, 1.0);
+    // std::cout << matrix << std::endl;
+    // Matrix matrix2(2,3);
+    // matrix2 = matrix;
+    // std::cout << matrix2 << std::endl;
+
+    // Problem 5a
+    // Matrix matrix(3,3);
+    // matrix.set(0,0, 1.0);
+    // matrix.set(1,1, -2.0);
+    // matrix.set(2,2, 3.0);
+    // matrix.set(0,1, 4.0);
+    // std::cout << matrix << std::endl;
+
+    // Matrix matrix2(3,3);
+    // matrix2.set(0,0, 2.0);
+    // matrix2.set(1,1, 1.0);
+    // matrix2.set(2,2, 5.0);
+    // matrix2.set(0,1, 6.0);
+    // std::cout << matrix2 << std::endl;
+
+    // matrix += matrix2;
+    // std::cout << matrix << std::endl;
+
+    // Problem 5c
+    // Matrix A(2);
+    // Matrix B(2);
+    // Matrix C(2);
+
+    // A.set(0,1, 2.0);
+    // A.set(1,1, 4.0);
+    // A.set(1,0, 3.0);
+    // std::cout << A << std::endl;
+
+    // B.set(0,0, 4.0);
+    // B.set(0,1, 3.0);
+    // B.set(1,0, 2.0);
+    // std::cout << B << std::endl;
+
+    // C.set(0,1, 3.0);
+    // C.set(1,1, 2.0);
+    // C.set(1,0, 1.5);
+    // std::cout << C << std::endl;
+
+    // A += B + C;
+    // std::cout << A << std::endl;
+    // std::cout << B << std::endl;
+    // std::cout << C << std::endl;
+
 
     return 0;
 }
