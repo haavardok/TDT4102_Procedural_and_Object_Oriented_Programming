@@ -6,7 +6,6 @@
 constexpr int xmax = 1000;
 constexpr int ymax = 600;
 constexpr int emojiRadius = 50;
-constexpr Point windowCentre{xmax/2, ymax/2};
 constexpr Point windowSize{xmax, ymax};
 
 int main()
