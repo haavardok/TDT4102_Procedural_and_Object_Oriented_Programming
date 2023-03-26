@@ -1,7 +1,7 @@
 #include "Person.hpp"
 
-Person::Person(std::string name, std::string email)
-    : name{name}, email{email}, car{nullptr} {}
+Person::Person(const std::string &name, const std::string &email, std::unique_ptr<Car> car)
+    : name{name}, email{email}, car{std::move(car)} {}
 
 std::string Person::getName() const
 {
@@ -13,9 +13,9 @@ std::string Person::getEmail() const
     return email;
 }
 
-void Person::setEmail(std::string emailAddress)
+void Person::setEmail(const std::string &emailAddress)
 {
-    email = emailAddress;
+    this->email = emailAddress;
 }
 
 bool Person::hasAvailableSeats() const
@@ -30,7 +30,7 @@ bool Person::hasAvailableSeats() const
 
 std::ostream &operator<< (std::ostream &os, const Person &person)
 {
-    os << person.getName() << ", " << person.getEmail();
+    os << person.name << ", " << person.email;
 
     return os;
 }
