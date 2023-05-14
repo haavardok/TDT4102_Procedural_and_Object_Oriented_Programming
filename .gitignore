@@ -28,6 +28,9 @@
 **/inspera_assignment_1/.vscode
 **/inspera_assignment_1/builddir
 **/inspera_assignment_1/subprojects
+**/inspera_assignment_2/.vscode
+**/inspera_assignment_2/builddir
+**/inspera_assignment_2/subprojects
 *.build
 *.vscode
 *.builddir
