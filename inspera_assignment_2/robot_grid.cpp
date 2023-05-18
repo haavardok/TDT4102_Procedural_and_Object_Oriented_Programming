@@ -21,10 +21,10 @@ void RobotGrid::draw_grid_lines()
     // and // END: G1 comments. You should remove any code that is
     // already there and replace it with your own.
 
-    cols = 2;
-    cell_width = 650/cols;
-    rows = 2;
-    cell_height = 650/rows;
+    // cols = 2;
+    // cell_width = 650/cols;
+    // rows = 2;
+    // cell_height = 650/rows;
 
     window.draw_line({x_pos,y_pos}, {w_size,y_pos}, TDT4102::Color::black);
     window.draw_line({w_size,y_pos}, {w_size,h_size}, TDT4102::Color::black);
@@ -61,7 +61,7 @@ Point RobotGrid::get_grid_cell_center_coord(int x, int y) const
   // and // END: G2 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  Point center_in_grid = {x_pos+x*cell_width+cell_width/2,y_pos+x*cell_height+cell_height/2};
+  Point center_in_grid = {x_pos+x*cell_width+cell_width/2,y_pos+y*cell_height+cell_height/2};
 
   return center_in_grid;
 
@@ -188,8 +188,7 @@ void RobotGrid::recolor_robot(string name, Color color)
   // and // END: G7 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)name;
-  (void)color;
+  robots.at(name)->color = color;
 
   // END: G7
 
@@ -206,6 +205,8 @@ void RobotGrid::clear_robots()
   // Write your answer to assignment G8 here, between the // BEGIN: G8
   // and // END: G8 comments. You should remove any code that is
   // already there and replace it with your own.
+
+  robots.clear();
 
   // END: G8
 
@@ -229,8 +230,10 @@ void RobotGrid::rename_robot(string name, string new_name)
   // and // END: G9 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)name;
-  (void)new_name;
+  Point pos = robots.at(name)->pos;
+  Color col = robots.at(name)->color;
+  delete_robot(name);
+  make_robot(new_name, pos, col);
 
   // END: G9
 }
@@ -250,7 +253,12 @@ void RobotGrid::check_coord_bounds(Point p) const
   // and // END: G10 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)p;
+  if (p.x < 0 || p.x >= cols) {
+    throw invalid_argument("The x coordinate exceeds the boundaries of this universe.");
+  }
+  else if (p.y < 0 || p.y >= rows) {
+    throw invalid_argument("The y coordinate exceeds the boundaries of this universe.");
+  }
 
   // END: G10
 
@@ -271,7 +279,9 @@ void RobotGrid::check_name_available(string name) const
   // and // END: G11 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)name;
+  if (robots.find(name) != robots.end()) {
+    throw invalid_argument("The name is already in use.");
+  }
 
   // END: G11
 }
@@ -291,7 +301,9 @@ void RobotGrid::check_name_exists(string name) const
   // and // END: G12 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)name;
+  if (robots.find(name) == robots.end()) {
+    throw invalid_argument("The robot does not exist.");
+  }
 
   // END: G12
 
@@ -331,9 +343,14 @@ void RobotGrid::check_coord_empty(Point p, string name, bool is_moving) const
   // and // END: G13 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)p;
-  (void)name;
-  (void)is_moving;
+  for(const auto & r : robots){
+    Point curr_pos = r.second->pos;
+    if(curr_pos.x == p.x && curr_pos.y == p.y){
+      if(name != r.first || !is_moving){
+        throw invalid_argument("There is already a robot at this position.");
+      }
+    }
+  }
   
   // END: G13
 

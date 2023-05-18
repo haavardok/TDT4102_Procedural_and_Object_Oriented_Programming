@@ -20,8 +20,18 @@ string Application::load_program(string file_name)
   // and // END: A1 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)file_name;
-  return "";
+  ifstream inFile{file_name};
+  if (!inFile) {
+    throw invalid_argument("Could not open file: " + file_name);
+  }
+  
+  string line{""};
+  string result{""};
+
+  while(getline(inFile, line)){
+    result += line + "\n";
+  }
+  return result;
 
   // END: A1
 }
@@ -42,8 +52,12 @@ void Application::save_program(string file_name, string contents)
   // and // END: A2 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)file_name;
-  (void)contents;
+  ofstream outFile{file_name};
+  if (!outFile) {
+    throw invalid_argument("Could not open file: " + file_name);
+  }
+
+  outFile << contents;
 
   // END: A2
 }
@@ -61,8 +75,7 @@ bool Application::is_int(const string& s)
   // and // END: A3 comments. You should remove any code that is
   // already there and replace it with your own.
 
-  (void)s;
-  return false;
+  return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
 
   // END: A3
 
