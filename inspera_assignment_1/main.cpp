@@ -13,8 +13,8 @@ int main()
 	InsuranceContract contract{"Jonas Lie", InsuranceType::Car, 1000, 1242, ""};
 	//You can test your code under here
 
-	//cout << insuranceTypeToString(InsuranceType::Contents);
-	//db.getContract(1234);
+	// cout << insuranceTypeToString(InsuranceType::Contents);
+	cout << db.getContract(1234);
 
 	return 0;
 }

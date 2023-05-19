@@ -28,8 +28,11 @@ string insuranceTypeToString(InsuranceType t)
     else if (t == InsuranceType::Contents) {
         return "Contents";
     }
-    else {
+    else if (t == InsuranceType::Travel) {
         return "Travel";
+    }
+    else {
+        throw runtime_error("Non-valid parameter given");
     }
     
     // END: 1a

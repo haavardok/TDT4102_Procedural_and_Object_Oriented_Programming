@@ -7,7 +7,11 @@ InsuranceContract ContractDataBase::getContract(int id)
     // Write your answer to assignment 1b here, between the // BEGIN: 1b
     // and // END: 1b comments. Remove the code that is already there.
 
-    return contracts.at(static_cast<size_t>(id));
+    for (unsigned int i=0; i<contracts.size(); i++) {
+        if (contracts.at(i).getId() == id) {
+            return contracts.at(i);
+        }
+    }
 
     // END: 1b
 
