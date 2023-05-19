@@ -46,7 +46,7 @@ void playMastermind(void)
 
     // Problem 4j
     if (numTriesLeft >= 1) {
-        cout << "Congratulations, you guessed correct!" << endl;
+        cout << "Congratulations, you guessed the code!" << endl;
     }
     else {
         cout << "You did not manage to guess correct this game. Better luck next time." << endl;

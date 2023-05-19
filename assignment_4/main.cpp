@@ -3,6 +3,7 @@
 #include "utilities.hpp"
 #include "tests.hpp"
 #include "game.hpp"
+#include "masterVisual.h"
 
 //------------------------------------------------------------------------------
 
@@ -45,7 +46,8 @@ void menu(void)
              << "3)\ttestSwapNumbers\n"
              << "4)\ttestString\n"
              << "5)\tPlay Mastermind\n"
-			 << "Choose option (0-5): ";
+             << "6)\tPlay visual Mastermind\n"
+			 << "Choose option (0-6): ";
 
 		cin >> menu_choice;
 
@@ -65,6 +67,9 @@ void menu(void)
             break;
         case 5:
             playMastermind();
+            break;
+        case 6:
+            playMastermindVisual();
             break;
 
 		default:
