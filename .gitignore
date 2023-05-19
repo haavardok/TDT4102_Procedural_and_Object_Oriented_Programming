@@ -31,6 +31,9 @@
 **/inspera_assignment_2/.vscode
 **/inspera_assignment_2/builddir
 **/inspera_assignment_2/subprojects
+**/exam_a22/.vscode
+**/exam_a22/builddir
+**/exam_a22/subprojects
 *.build
 *.vscode
 *.builddir
