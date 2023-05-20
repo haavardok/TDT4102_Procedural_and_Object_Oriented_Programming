@@ -13,9 +13,23 @@ int main()
 	InsuranceContract contract{"Jonas Lie", InsuranceType::Car, 1000, 1242, ""};
 	//You can test your code under here
 
-	// cout << insuranceTypeToString(InsuranceType::Contents);
-	cout << db.getContract(1234);
+	// cout << db.getContract(1234) << endl;
+	// cout << db.numberOfInsuranceType(InsuranceType::Car) << endl;
+	// cout << db.addContract("Test", InsuranceType::Car, 3000) << endl;
+	// cout << db.getContract(1242) << endl;
+	// db.saveContracts("testDatabase.txt");
 
+	// cout << toGreek("Alle fugler sma de er") << endl;
+	// vector<vector<string>> svada = loadSvada();
+	// cout << svada.at(6).at(23) << endl;
+	// cout << "yes" << endl;
+
+	// vector<vector<string>> svada = loadSvada();
+	// string svadaSentence = svadaGenerator(svada);
+	// cout << svadaSentence;
+
+	db.saveContracts("updatedDatabase.txt");
+	
 	return 0;
 }
 

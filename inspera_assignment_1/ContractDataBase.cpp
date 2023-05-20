@@ -26,8 +26,15 @@ int ContractDataBase::numberOfInsuranceType(InsuranceType type)
     // Write your answer to assignment 1c here, between the // BEGIN: 1c
     // and // END: 1c comments. Remove the code that is already there.
 
-    (void)type;
-    return 0;
+    int nContracts{0};
+
+    for (auto & c : contracts) {
+        if (c.getInsuranceType() == type) {
+            nContracts++;
+        }
+    }
+
+    return nContracts;
 
     // END: 1c
 }
@@ -39,10 +46,17 @@ int ContractDataBase::addContract(string holderName, InsuranceType insType, int 
     // Write your answer to assignment 1d here, between the // BEGIN: 1d
     // and // END: 1d comments. Remove the code that is already there.
 
-    (void)holderName;
-    (void)insType;
-    (void)value;
-    return 0;
+    int id{1};
+
+    if (contracts.back().getId() > id) {
+        id = contracts.back().getId() + 1;
+    }
+
+    InsuranceContract newContract(holderName, insType, value, id);
+
+    contracts.push_back(newContract);
+
+    return id;
 
     // END: 1d
 }
@@ -54,7 +68,18 @@ void ContractDataBase::saveContracts(string filename)
     // Write your answer to assignment 1e here, between the // BEGIN: 1e
     // and // END: 1e comments. Remove the code that is already there.
 
-    (void)filename;
+    ofstream database{filename};
+    if (!database) {
+        error("Can't open output file ", filename);
+    }
+
+    for (auto & c : contracts) {
+        database << c.getHolder() << ","
+                 << insuranceTypeToString(c.getInsuranceType()) << ","
+                 << to_string(c.getValue()) << ","
+                 << to_string(c.getId()) << ","
+                 << c.getInsuranceText() << "\n";
+    }
 
     // END: 1e
 }

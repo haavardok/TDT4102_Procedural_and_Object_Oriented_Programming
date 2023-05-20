@@ -11,6 +11,13 @@ InsuranceContract::InsuranceContract(string holderName, InsuranceType insType, i
         // Write your answer to assignment 2c2 here, between the // BEGIN: 2c2
         // and // END: 2c2 comments. Remove the code that is already there.
 
+        vector<vector<string>> svadaVector = loadSvada();
+
+        insuranceText = "";
+        for (int i=0; i<10; i++) {
+            insuranceText += svadaGenerator(svadaVector);
+        }
+	    
         // END: 2c2
     }
 }
