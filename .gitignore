@@ -34,6 +34,9 @@
 **/exam_a22/.vscode
 **/exam_a22/builddir
 **/exam_a22/subprojects
+**/exam_s23/.vscode
+**/exam_s23/builddir
+**/exam_s23/subprojects
 *.build
 *.vscode
 *.builddir
